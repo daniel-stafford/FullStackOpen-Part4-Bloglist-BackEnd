@@ -32,7 +32,8 @@ test('all blogs are returned and counted', async () => {
 
 test('unique identifier property of the blog posts is named id', async () => {
 	const response = await api.get('/api/blogs')
-	expect(response.body.map(blog => blog._id)).toBeDefined()
+	const idList = response.body.map(blog => blog._id)
+	expect(idList).toBeDefined()
 })
 
 afterAll(() => {
