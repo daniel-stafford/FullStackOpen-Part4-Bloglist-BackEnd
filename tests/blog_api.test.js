@@ -49,6 +49,11 @@ test('a blog post can be added ', async () => {
 	expect(blogsatEnd.length).toBe(helper.initialBlogs.length + 1)
 })
 
+test('lilkes property is missing from the request, it will default to the value 0', async () => {
+	const response = await api.get('/api/blogs')
+	expect(response.body[0].likes).toBe(0)
+})
+
 afterAll(() => {
 	mongoose.connection.close()
 })
