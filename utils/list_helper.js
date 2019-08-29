@@ -28,8 +28,15 @@ const favoriteBlog = blogs => {
 	return favBlog
 }
 
+const mostBlogs = blogs => {
+	const result = _.groupby(blogs, 'author')
+	console.log(result)
+	return result
+}
+
 module.exports = {
 	dummy,
 	totalLikes,
-	favoriteBlog
+	favoriteBlog,
+	mostBlogs
 }

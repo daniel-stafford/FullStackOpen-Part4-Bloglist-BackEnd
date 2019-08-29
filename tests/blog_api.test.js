@@ -36,6 +36,19 @@ test('unique identifier property of the blog posts is named id', async () => {
 	expect(idList).toBeDefined()
 })
 
+test('a blog post can be added ', async () => {
+	const newBlog = {
+		title: 'How To Fall from Grace',
+		author: 'Tiger Woods',
+		url: 'www.nike.com'
+	}
+
+	await api.post('/api/blogs').send(newBlog)
+
+	const blogsatEnd = await helper.blogsInDb()
+	expect(blogsatEnd.length).toBe(helper.initialBlogs.length + 1)
+})
+
 afterAll(() => {
 	mongoose.connection.close()
 })
