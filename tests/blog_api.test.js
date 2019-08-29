@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const supertest = require('supertest')
 const helper = require('./test_helper')
+const _ = require('lodash')
 
 const app = require('../app')
 
@@ -50,8 +51,16 @@ test('a blog post can be added ', async () => {
 })
 
 test('lilkes property is missing from the request, it will default to the value 0', async () => {
-	const response = await api.get('/api/blogs')
-	expect(response.body[0].likes).toBe(0)
+	const newBlog = {
+		title: 'Does Anybody Like Me',
+		author: 'Richard Simmons',
+		url: 'www.missing.com'
+	}
+
+	await api.post('/api/blogs').send(newBlog)
+	const blogsatEnd = await helper.blogsInDb()
+	console.log('Blogs at End', blogsatEnd)
+	expect(_.last(blogsatEnd).likes).toBe(0)
 })
 
 afterAll(() => {
