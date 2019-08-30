@@ -10,8 +10,8 @@ blogsRouter.get('/', (request, response) => {
 blogsRouter.post('/', async (request, response, next) => {
 	const blog = new Blog(request.body)
 	try {
-		const savedNote = await blog.save()
-		response.status(201).json(savedNote.toJSON())
+		const savedBlog = await blog.save()
+		response.status(201).json(savedBlog.toJSON())
 	} catch (error) {
 		next(error)
 	}
@@ -32,11 +32,11 @@ blogsRouter.put('/:id', async (request, response, next) => {
 	const blog = {
 		likes: body.likes
 	}
-	const updatedNote = await Blog.findByIdAndUpdate(request.params.id, blog, {
+	const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, {
 		new: true
 	})
 	try {
-		response.json(updatedNote.toJSON())
+		response.json(updatedBlog.toJSON())
 	} catch (e) {
 		next(e)
 	}
