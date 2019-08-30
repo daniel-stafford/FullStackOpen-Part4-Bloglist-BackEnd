@@ -2,8 +2,8 @@ post http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-  "title": "How to Sleep",
-	"author": "Bpb Franklin",
-	"url": "www.sleep.com",
-	"likes": "25"
+  "title": "How to Eat",
+	"author": "Bpb Brown",
+	"url": "www.eat.com",
+	"likes": "225"
 }
