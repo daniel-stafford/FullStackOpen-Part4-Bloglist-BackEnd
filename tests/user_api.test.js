@@ -45,10 +45,27 @@ describe('creating useres', () => {
 		const result = await api
 			.post('/api/users')
 			.send(newUser)
-			.expect(500)
+			.expect(400)
 			.expect('Content-Type', /application\/json/)
-
 		expect(result.body.error).toContain('`username` to be unique')
+
+		const usersAtEnd = await helper.usersInDb()
+		expect(usersAtEnd.length).toBe(usersAtStart.length)
+	})
+	test('creation fails with proper statuscode and message if username or password is too short', async () => {
+		const usersAtStart = await helper.usersInDb()
+		const newUser = {
+			username: 'dstafford',
+			name: 'tester',
+			password: 'ab'
+		}
+
+		const result = await api
+			.post('/api/users')
+			.send(newUser)
+			.expect(400)
+			.expect('Content-Type', /application\/json/)
+		expect(result.body.error).toContain('at least 3 characters long')
 
 		const usersAtEnd = await helper.usersInDb()
 		expect(usersAtEnd.length).toBe(usersAtStart.length)
