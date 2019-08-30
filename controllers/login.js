@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const loginRouter = require('express').Router()
@@ -10,8 +11,8 @@ loginRouter.post('/', async (request, response) => {
 	const passwordCorrect =
     user === null
     	? false
-    	: await bcrypt.compare(body.password, user.passwordHash)
-
+    	: // eslint-disable-next-line no-mixed-spaces-and-tabs
+    	await bcrypt.compare(body.password, user.passwordHash)
 	if (!(user && passwordCorrect)) {
 		return response.status(401).json({
 			error: 'invalid username or password'
