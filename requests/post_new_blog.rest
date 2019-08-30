@@ -2,8 +2,8 @@ post http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-  "title": "How to Eat",
-	"author": "Bpb Brown",
-	"url": "www.eat.com",
-	"likes": "225"
+  "title": "How to Rollerblade3",
+	"author": "John Brown",
+	"url": "www.rollerblade.com",
+	"likes": "10"
 }
