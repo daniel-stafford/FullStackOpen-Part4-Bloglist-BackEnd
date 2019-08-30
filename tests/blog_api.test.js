@@ -63,6 +63,17 @@ test('lilkes property is missing from the request, it will default to the value 
 	expect(_.last(blogsatEnd).likes).toBe(0)
 })
 
+test('title and url properties are missing, 400 Bad Request', async () => {
+	const newBlog = {
+		author: 'Richard Simmons',
+		url: 'www.missing.com'
+	}
+	await api
+		.post('/api/blogs')
+		.send(newBlog)
+		.expect(400)
+})
+
 afterAll(() => {
 	mongoose.connection.close()
 })
