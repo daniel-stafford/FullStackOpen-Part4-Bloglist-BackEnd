@@ -29,8 +29,18 @@ const favoriteBlog = blogs => {
 }
 
 const mostBlogs = blogs => {
-	const result = _.groupby(blogs, 'author')
-	console.log(result)
+	const authorArray = _.map(blogs, 'author') //create an array of author values from the object array
+	const author = _.head(
+		_(authorArray)
+			.countBy()
+			.entries()
+			.maxBy(_.last)
+	)
+	const totalBlogs = blogs.filter(blog => blog.author === author).length
+	const result = {
+		author,
+		blogs: totalBlogs
+	}
 	return result
 }
 
