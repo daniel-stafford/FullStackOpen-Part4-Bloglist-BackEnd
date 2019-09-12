@@ -1,15 +1,20 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
 const User = require('../models/user')
+const Comment = require('../models/comment')
 const jwt = require('jsonwebtoken')
 
 blogsRouter.get('/', async (request, response, next) => {
 	try {
-		const blogs = await Blog.find({}).populate('user', {
-			username: 1,
-			name: 1,
-			id: 1
-		})
+		const blogs = await Blog.find({})
+			.populate('user', {
+				username: 1,
+				name: 1,
+				id: 1
+			})
+			.populate('comments', {
+				comment: 1
+			})
 		response.json(blogs)
 	} catch (error) {
 		next(error)
@@ -78,6 +83,29 @@ blogsRouter.put('/:id', async (request, response, next) => {
 		response.json(updatedBlog.toJSON())
 	} catch (e) {
 		next(e)
+	}
+})
+
+//add comments
+blogsRouter.post('/:id/comments', async (request, response, next) => {
+	const body = request.body
+	try {
+		if (body.comment === null) {
+			response.status(400).end()
+		}
+
+		const comment = new Comment({
+			comment: body.comment,
+			blog: request.params.id
+		})
+
+		const savedComment = await comment.save()
+		const blog = await Blog.findById(request.params.id)
+		blog.comments = blog.comments.concat(savedComment.id)
+		await blog.save()
+		response.status(201).json(savedComment.toJSON())
+	} catch (exception) {
+		next(exception)
 	}
 })
 
