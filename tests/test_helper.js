@@ -24,7 +24,7 @@ const initialUsers = [
 	},
 	{
 		username: 'fsmith',
-		name: 'Frank Smith Knizia',
+		name: 'Frank Smith',
 		password: 'abc123'
 	}
 ]
